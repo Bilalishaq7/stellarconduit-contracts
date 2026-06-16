@@ -56,3 +56,5 @@ yarn-error.log*
 .Trashes
 ehthumbs.db
 Thumbs.db
+# Local issue tracking (do not push)
+docs/issues/
