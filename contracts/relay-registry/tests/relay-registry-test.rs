@@ -440,7 +440,7 @@ fn test_slash_seizes_pending_unstake() {
 
     // Verify the slash event combined the active stake and the pending unstake
     let events = env.events().all();
-    if events.len() > 0 {
+    if !events.is_empty() {
         let mut found = false;
         for event in events.iter() {
             let (addr, topics, data) = event;
