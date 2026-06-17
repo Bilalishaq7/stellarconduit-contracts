@@ -352,7 +352,7 @@ fn test_resolve_no_response_expired() {
 fn test_respond_unauthorized_respondent() {
     let (env, client, _) = setup();
     let (initiator, respondent, init_sk, _) = setup_disputants(&env, &client);
-    
+
     // Create a third party
     let unauthorized = Address::generate(&env);
 
@@ -364,7 +364,7 @@ fn test_respond_unauthorized_respondent() {
 
     let unauthorized_sk = ed25519_dalek::SigningKey::from_bytes(&[3u8; 32]);
     let resp_proof = create_proof(&env, &unauthorized_sk, &chain_hash, 15);
-    
+
     client.respond(&unauthorized, &dispute_id, &resp_proof);
 }
 
