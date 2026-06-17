@@ -445,10 +445,15 @@ fn test_slash_seizes_pending_unstake() {
         for event in events.iter() {
             let (addr, topics, data) = event;
             if addr == client.address && topics.len() == 2 {
-                let t1: soroban_sdk::Symbol = soroban_sdk::FromVal::from_val(&env, &topics.get(0).unwrap());
-                let t2: soroban_sdk::Symbol = soroban_sdk::FromVal::from_val(&env, &topics.get(1).unwrap());
-                if t1 == soroban_sdk::Symbol::new(&env, "relay_registry") && t2 == soroban_sdk::Symbol::new(&env, "slash") {
-                    let (event_addr, amount): (Address, i128) = soroban_sdk::FromVal::from_val(&env, &data);
+                let t1: soroban_sdk::Symbol =
+                    soroban_sdk::FromVal::from_val(&env, &topics.get(0).unwrap());
+                let t2: soroban_sdk::Symbol =
+                    soroban_sdk::FromVal::from_val(&env, &topics.get(1).unwrap());
+                if t1 == soroban_sdk::Symbol::new(&env, "relay_registry")
+                    && t2 == soroban_sdk::Symbol::new(&env, "slash")
+                {
+                    let (event_addr, amount): (Address, i128) =
+                        soroban_sdk::FromVal::from_val(&env, &data);
                     if event_addr == node_addr {
                         assert_eq!(amount, 200i128); // 150 active + 50 pending
                         found = true;
