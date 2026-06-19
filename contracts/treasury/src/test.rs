@@ -524,7 +524,7 @@ fn setup_initialized_treasury<'a>(env: &Env, admin: &Address) -> TreasuryContrac
         storage::set_token_address(env, &token_address);
     });
 
-    if let Err(Err(err)) = client.try_initialize(&council, &token_address) {
+    if let Err(Err(_err)) = client.try_initialize(&council, &token_address) {
         // If it's already initialized, that's completely fine, keep going
         // Otherwise, you can log or let it fail if it's a completely different error
     } // <--- MAKE SURE THIS BRACE IS HERE TO CLOSE THE IF LET
