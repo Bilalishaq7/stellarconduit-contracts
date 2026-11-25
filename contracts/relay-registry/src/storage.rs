@@ -46,7 +46,9 @@ pub enum DataKey {
     StakeLockPeriod,
     AdminCouncil,
     TokenAddress,
+    TreasuryAddress,
     LockEntry(Address),
+    PauseContractAddress,
 }
 
 pub fn get_node(env: &Env, address: &Address) -> Option<RelayNode> {
@@ -143,6 +145,16 @@ pub fn set_token_address(env: &Env, token_address: &Address) {
         .set(&DataKey::TokenAddress, token_address);
 }
 
+pub fn get_treasury_address(env: &Env) -> Option<Address> {
+    env.storage().instance().get(&DataKey::TreasuryAddress)
+}
+
+pub fn set_treasury_address(env: &Env, address: &Address) {
+    env.storage()
+        .instance()
+        .set(&DataKey::TreasuryAddress, address);
+}
+
 pub fn get_lock_entry(env: &Env, address: &Address) -> Option<crate::types::StakeEntry> {
     let key = DataKey::LockEntry(address.clone());
     if let Some(entry) = env
@@ -171,4 +183,17 @@ pub fn remove_lock_entry(env: &Env, address: &Address) {
     env.storage()
         .persistent()
         .remove(&DataKey::LockEntry(address.clone()));
+}
+
+pub fn get_pause_contract_address(env: &Env) -> Address {
+    env.storage()
+        .instance()
+        .get(&DataKey::PauseContractAddress)
+        .expect("pause contract address not initialized")
+}
+
+pub fn set_pause_contract_address(env: &Env, address: &Address) {
+    env.storage()
+        .instance()
+        .set(&DataKey::PauseContractAddress, address);
 }
